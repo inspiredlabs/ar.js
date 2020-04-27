@@ -14,50 +14,62 @@
 
 ## Overview
 
-This repository aims to have working examples of common tasks for organising WebAR projects – hosted on GitHub Pages for convenience.
+This repository of common tasks for organising WebAR projects is hosted on GitHub Pages for convenience.
 
-### `markerless.html` shows device location AR, [here](https://inspiredlabs.github.io/ar.js/markerless.html):
+
+### Demo 
+
+In the console the entity `a-scene` in [`markerless.html`](https://inspiredlabs.github.io/ar.js/markerless.html) shows device location AR:
+
 
 ```html
 <!doctype html>
 <html>
-<head>
-<link rel="canonical" href="https://inspiredlabs.github.io/ar.js/markerless.html" />
-<!-- aframe v0.9.2 is location based -->
-<script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
-<!--<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script><!-- debug -->
-<script>
-  const log = console.log;
-  window.onload = () => {
-    let scene = document.querySelector('a-scene'); // Apply to whole scene?
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        let gps = document.createAttribute('gps-entity-place'),
+<head>
+  <link rel="canonical" href="https://inspiredlabs.github.io/ar.js/markerless.html" />
+  <!-- location based aframe v0.9.2 -->
+  <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script><!-- debug -->
+  <script>
+    const log = console.log;
+    window.onload = () => {
+      let scene = document.querySelector('a-scene'); /* Apply to whole scene */
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          let gps = document.createAttribute('gps-entity-place'),
             arjs = document.createAttribute('arjs'),
             welcome = document.getElementById('welcome');
 
-        arjs.value = 'sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; trackingMethod: best; debugUIEnabled: false;';
-        gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001}`;
-        log(gps.value);
-        welcome.setAttributeNode(gps);
-        //scene.setAttributeNode(gps); // Apply to whole scene?
-      });
-    }
+          arjs.value = 'sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; trackingMethod: best; debugUIEnabled: false;';
+          gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001}`;
+          log(gps.value);
+          scene.setAttributeNode(gps); /* Apply to whole scene */
+          scene.setAttributeNode(arjs);
+        });
+      }
 
-  };
-</script>
+    };
+  </script>
 </head>
 <a-scene vr-mode-ui="enabled: false">
-  <a-entity id="wrapper" position="0 -8 0"><a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
+  <a-entity id="wrapper" position="0 -8 0">
+
+    <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
     <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
     <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
     <a-plane position="0 0 -5.0" rotation="-90 0 0" width="7" height="7" color="#7BC8A4" shadow></a-plane>
-    <a-text id="welcome" value="Welcome" scale="75 75 75" color="#000000"  position="-30 0 -150">
-    </a-text><!-- look-at="[gps-camera]" --></a-entity><!-- /wrapper -->
-    <a-camera camera="fov: 60;" gps-camera rotation-reader></a-camera>
-    </a-scene>
-  </body>
+
+    <a-text id="welcome" value="Welcome" scale="75 75 75" color="#000000" position="-30 0 -150"></a-text>
+    <!-- look-at="[gps-camera]" -->
+
+  </a-entity><!-- /wrapper -->
+
+  <a-camera camera="fov: 60;" gps-camera rotation-reader></a-camera>
+</a-scene>
+</body>
+
 </html>
 ```
 
