@@ -10,14 +10,49 @@
 
 * * *
 
-<h1 align="center">Augmented Reality reduced-test-cases for the web</h1>
+<h1 align="center">AR.js reduced-test-cases for Web Augmented Reality</h1>
 
 ## Overview
 
-This repository of common tasks for organising WebAR projects is hosted on GitHub Pages for convenience.
+This repository is an introduction to common tasks for organising WebAR projects. Examples are hosted on GitHub Pages for convenient reference.
+
+* * *
+
+### Trex
+
+[`trex.html`](https://inspiredlabs.github.io/ar.js/shadow-material.html) extends `aframe.min.js` with `aframe-ar.js`, a marker + location based build without NFT support. 
 
 
-### Demo 
+Print the marker or use a tablet on the table to   display a `glTF` model on-top of this marker ([8Kb jpg](https://inspiredlabs.github.io/ar.js/hiro.jpg), or [1Kb webP](https://inspiredlabs.github.io/ar.js/hiro.webp)):
+
+![Hiro marker](https://inspiredlabs.github.io/ar.js/hiro.webp "Hiro marker")
+
+
+* * *
+	
+
+
+### Shadow on Transparent Plane
+
+See: [`shadow-material.html`](https://inspiredlabs.github.io/ar.js/shadow-material.html) working in the viewport.
+
+ `getOrCreateObject3D('name', constructor)` applies `shadow-material` attribute directly to `<a-plane>`. This script works in the `<head>`:
+
+```
+AFRAME.registerComponent('shadow-material', {
+      init() {
+        this.material = new THREE.ShadowMaterial();
+        this.el.getOrCreateObject3D('mesh').material = this.material;
+        this.material.opacity = 0.3;
+      }
+    });
+```
+
+⚠️ [Deprecated](https://github.com/aframevr/aframe/blob/master/CHANGELOG.md#deprecations-2) potential [update](https://codepen.io/inspiredlabs/pen/ZEbyzOK).
+
+* * *
+
+### Location Based Demo 
 
 In the console the entity `a-scene` in [`markerless.html`](https://inspiredlabs.github.io/ar.js/markerless.html) shows device location AR:
 
@@ -73,9 +108,41 @@ In the console the entity `a-scene` in [`markerless.html`](https://inspiredlabs.
 </html>
 ```
 
-## Twitter
+🎈 Object identification is [limited](https://www.youtube.com/watch?v=8TVOTf33q8A) with predefined dataset properties such as `data-*`. Their naming patterns include hyphen `-`, underscore `_`, period `.` or colon `:`. Whilst this makes them easy to access, they lack complex, human readable names:
 
-- Follow [@inspiredlabs](https://twitter.com/inspiredlabs) on Twitter.
+- `log(gps.dataset['gps']);`
+- `log(gps.dataset.gps);`
+- `log(gps.getAttribute('data-gps'));`
+
+♻️ `createAttribute` enables you to write custom attributes to refrence in the DOM. They are constructed in three steps:
+
+```
+let gps = document.createAttribute('gps-entity-place');
+```
+
+`createAttribute` expects a `string`, and doesn't apply a value automatically. Here, we'll use `position` in a template literal to form the property value correctly:
+
+```
+gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001}`;
+// log(gps.value); // check property value
+```
+
+The final step is to apply to the element to **one** DOM node:
+
+```
+scene.setAttributeNode(gps);
+//welcome.setAttributeNode(gps); // apply text only 
+```
+
+This should be invoked using `window.onload`.
+
+* * * 
+
+
+
+## About
+
+Learn more about Scott Phillips on [Inspired Labs](https://inspiredlabs.co.uk), or follow [@inspiredlabs](https://twitter.com/inspiredlabs) on Twitter.
 
 ## License
 

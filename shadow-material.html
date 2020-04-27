@@ -9,7 +9,7 @@
   <script>
     const log = console.log;
     window.onload = () => {
-      let scene = document.querySelector('a-scene'); /* Apply to whole scene */
+      let scene = document.querySelector('a-scene'); /* Apply wrapper to whole scene */
 
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -20,7 +20,7 @@
           arjs.value = 'sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; trackingMethod: best; debugUIEnabled: false;';
           gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001}`;
           log(gps.value);
-          scene.setAttributeNode(gps); /* Apply to whole scene */
+          scene.setAttributeNode(gps); /* Apply wrapper to whole scene */
           scene.setAttributeNode(arjs);
         });
       }
@@ -29,7 +29,7 @@
   </script>
   
   <style> * { -webkit-tap-highlight-color: rgba(0,0,0,0); }/*prevent flicker*/</style>
-  <script src="js/aframe-extras.min.js"></script><!-- canonical: https://github.com/donmccurdy/aframe-extras -->
+  <!--script src="js/aframe-extras.min.js"></script--><!-- canonical: https://github.com/donmccurdy/aframe-extras -->
   <script type="text/javascript">
     AFRAME.registerComponent('shadow-material', {
       init() {
