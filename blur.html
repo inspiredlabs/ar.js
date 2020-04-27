@@ -1,0 +1,92 @@
+<doctype HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>GeoAR.js demo</title>
+  <script src="js/aframe.min.js"></script>
+  <script src="js/aframe-look-at-component.min.js"></script>
+  <script src="js/aframe-ar-nft.js"></script>
+
+  <script>
+    const log = console.log;
+    window.onload = () => {
+
+      let scene = document.querySelector('a-scene');
+      let myGroup = document.getElementById('myGroup');
+
+      if (navigator.geolocation) {
+        //Dummy one, which will result in a working next statement.
+        navigator.geolocation.getCurrentPosition(function () { }, function () { }, {});
+
+        //The working next statement.
+        navigator.geolocation.getCurrentPosition(function (position) {
+
+          try {
+            let lat = position.coords.latitude;
+            let long = position.coords.longitude;
+            //let box = document.createElement('a-box');
+
+            alert(lat);
+            alert(long);
+
+            function createNode(node, attributes) {
+              const el = document.createElement(node);
+              for (let key in attributes) {
+                el.setAttribute(key, attributes[key]);
+              }
+              return el;
+            }
+
+            let box = createNode('a-box', {color: "blue", scale: "2 2 2" });
+
+            //gps-entity-place: "ciao", //`latitude: ${lat - 0.001}; longitude: ${long + 0.001}`
+
+
+            scene.appendChild(box);
+          }
+          catch (err) {
+            log(err.message);
+          }
+        }, function (e) {
+          //Your error handling here
+          log(err.message);
+        }, {
+            enableHighAccuracy: true
+          });
+      }
+    }
+
+  </script>
+
+  <style>
+  #arjs-video {
+    filter: blur(8px);
+    -webkit-filter:blur(8px);
+    /* transform: scale(1.8); *//* Might stretch CPU! */
+    /* -webkit-transform: translate3d(0, 0, 0); */
+    /* overflow: hidden; */
+    /*
+    margin: -5px -10px -10px -5px;*//* consider: stackoverflow.com/questions/12224320/defined-edges-with-css3-filter-blur */
+  }
+  </style>
+</head>
+
+<body style="margin: 0; overflow: hidden;" >
+
+  <a-scene
+    embedded
+    vr-mode-ui="enabled: false"
+    arjs="
+      trackingMethod: best;
+      debugUIEnabled: false;
+      sourceType: webcam; sourceWidth:40; sourceHeight:30;">
+    <a-entity
+      id="myGroup">
+      <a-text id="welcome" value="Welcome" scale="75 75 75" color="#000000" position="-30 0 -150" look-at="[gps-camera]"></a-text>
+    </a-entity>
+    <a-camera camera="fov: 35; far: 10000" gps-camera look-controls rotation-reader >
+    </a-camera><!-- gps-camera rotation-reader -->
+  </a-scene>
+
+</body>

@@ -16,17 +16,41 @@
 
 This repository is an introduction to common tasks for organising WebAR projects. Examples are hosted on GitHub Pages for convenient reference.
 
+### Camera Blur 
+
+Defocusing the camera background can degrade performance – consider this if you need to quickly pick out the subject in 3D.
+
+[`blur.html`](https://inspiredlabs.github.io/ar.js/blur.html) applies CSS filters to `#arjs-video` canvas:
+
+```
+#arjs-video {
+    filter: blur(8px);
+    -webkit-filter:blur(8px);
+    /* transform: scale(1.8); *//* Might stretch CPU! */
+  }
+```
+
+
+
+
 * * *
 
 ### Trex
 
-[`trex.html`](https://inspiredlabs.github.io/ar.js/shadow-material.html) extends `aframe.min.js` with `aframe-ar.js`, a marker + location based build without NFT support. 
+[`trex.html`](https://inspiredlabs.github.io/ar.js/trex.html) extends `aframe.min.js` with `aframe-ar.js`, a marker + location based build without NFT support. 
 
-
-Print the marker or use a tablet on the table to   display a `glTF` model on-top of this marker ([8Kb jpg](https://inspiredlabs.github.io/ar.js/hiro.jpg), or [1Kb webP](https://inspiredlabs.github.io/ar.js/hiro.webp)):
+Print the marker or use it on your tablet todisplay a `glTF` model on-top of this marker ([8Kb jpg](https://inspiredlabs.github.io/ar.js/hiro.jpg), or [1Kb webP](https://inspiredlabs.github.io/ar.js/hiro.webp)). Open [`trex.html`](https://inspiredlabs.github.io/ar.js/trex.html) on your mobile and point the camera to:
 
 ![Hiro marker](https://inspiredlabs.github.io/ar.js/hiro.webp "Hiro marker")
 
+In the HTML, you'll notice `rotation="pitch yaw roll"` to describe each degree of freedom. This makes orientation of 3D objects in co-ordinate space trivial: 
+
+```
+Roll, Pitch, Yaw:
+ - pitch: vertical rollercoaster up/down, nose & tail (nose dive: 90°).
+ - yaw: steering, like a bike (opposite direction: -90°).          
+ - roll: horizontal tilting, like plane wings (try: 45°).
+```
 
 * * *
 	
@@ -107,6 +131,20 @@ In the console the entity `a-scene` in [`markerless.html`](https://inspiredlabs.
 
 </html>
 ```
+
+
+<!--
+`setAttribues` won't work:
+```
+// `setAttribues` helper function: https://stackoverflow.com/a/12274782
+    function setAttributes(el, attrs) {
+      for (var key in attrs) {
+        el.setAttribute(key, attrs[key]);
+      }
+    };
+```
+-->
+
 
 🎈 Object identification is [limited](https://www.youtube.com/watch?v=8TVOTf33q8A) with predefined dataset properties such as `data-*`. Their naming patterns include hyphen `-`, underscore `_`, period `.` or colon `:`. Whilst this makes them easy to access, they lack complex, human readable names:
 
