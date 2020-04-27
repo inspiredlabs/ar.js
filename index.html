@@ -2,87 +2,49 @@
 <html>
 
 <head>
-  <style> * { -webkit-tap-highlight-color: rgba(0,0,0,0); }/*prevent flicker*/</style>
-  <script src="js/aframe.min.js"></script>
-  <script src="js/aframe-extras.min.js"></script>
-  <script src="js/aframe-look-at-component.min.js"></script>
-  <script src="js/aframe-ar-nft.js"></script><!-- debug -->
-  <script type="text/javascript">
-    AFRAME.registerComponent('shadow-material', {
-      init() {
-        this.material = new THREE.ShadowMaterial();
-        this.el.getOrCreateObject3D('mesh').material = this.material;
-        this.material.opacity = 0.3;
-      }
-    });
-  </script>
 
+<!-- include aframe -->
+<!-- with location based, use aframe v0.9.2 -->
+<script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+<!-- include ar.js -->
+
+<!--script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script--><!-- debug -->
 
   <script>
     const log = console.log;
     window.onload = () => {
-      let scene = document.querySelector('a-scene'); //..('a-scene');
+      let scene = document.querySelector('a-scene'); // Apply to scene?
 
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
           let gps = document.createAttribute('gps-entity-place'),
-              //embedded = document.createAttribute('embedded'),
               arjs = document.createAttribute('arjs'),
-              welcome = document.getElementById('welcome'),
-              myElement = document.getElementById('myElement');
+              welcome = document.getElementById('welcome');
 
-          //embedded.value = 'embedded';
-          //renderer.value = 'logarithmicDepthBuffer: true;'; // flickering geometry: stackoverflow.com/a/55672541
-          arjs.value = 'sourceType: webcam; sourceWidth: 30; sourceHeight: 20; trackingMethod: best; debugUIEnabled: false;';// github.com/AR-js-org/AR.js/blob/master/aframe/examples/location-based/always-face-user/index.html
-
-
-
-          //use quick & dirty estimate: 111,111 meters (111.111 km), from: gis.stackexchange.com/questions/2951/algorithm-for-offsetting-a-latitude-longitude-by-some-amount-of-meters
+          arjs.value = 'sourceType: webcam; sourceWidth: 30; sourceHeight: 20; trackingMethod: best; debugUIEnabled: false;';
           gps.value = `latitude: ${position.coords.latitude - 0.1}; longitude: ${position.coords.longitude + 0.1}`;
-
+          log(gps.value);
           welcome.setAttributeNode(gps);
-          //scene.setAttributeNode(gps);
-
+          //scene.setAttributeNode(gps); // Apply to scene?
         });
       }
     }
 
   </script>
 </head>
-
 <a-scene vr-mode-ui="enabled: false">
   <a-entity id="myElement" position="0 -8 0">
 
-    <!--a-entity
-    id="trex"
-    rotation="0 0 0"
-    position="-25 -35 -25"
-    scale="3 3 3"
-    gltf-model="trex/scene.gltf"></a-entity--><!-- material="shader: flat;" position="-25 -75 -25" position="-500 -1250 -25"
-       head: Material_22_baseColor.png position="[-front 0 +behind] [-lower 0 +higher] 0" rotation="0 0 90" -->
     <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
     <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
     <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
-    <a-plane position="0 0 -5.0" rotation="-90 0 0" width="7" height="7" color="#7BC8A4" shadow ></a-plane><!-- shadow-material width="400" height="400" color="#7BC8A4" -->
+    <a-plane position="0 0 -5.0" rotation="-90 0 0" width="7" height="7" color="#7BC8A4" shadow></a-plane>
 
-    <a-text id="welcome" value="Welcome" scale="75 75 75" position="-30 0 -150" color="#000000" ></a-text>
-    <!-- look-at="[gps-camera]"position="[-l 0 +r] [-lower 0 +higher] [-front 0 +behind]" -->
+    <a-text id="welcome" value="Welcome" scale="75 75 75" color="#000000"  position="-30 0 -150"></a-text><!-- look-at="[gps-camera]" -->
 
-  <!--a-entity rotation="0 0 0" position="-25 0 -25" scale="10 10 10" gltf-model="trex/scene.gltf"></a-entity-->
   </a-entity><!-- /myElement -->
 
-  <!-- a-entity position="0 -2500 0" shadow -->
-  <!--
-
-  -->
-  <!-- <a-sky color="#ECECEC"></a-sky> -->
-
-  <!--a-camera gps-camera rotation-reader></a-camera-->
-  <!-- UNDERSTAND CONTROLS <a-entity movement-controls="fly: true" >
-  <a-entity camera gps-camera rotation-reader position="0 1.6 0" look-controls></a-entity>
-  </a-entity>-->
-
-  <a-camera gps-camera rotation-reader></a-camera><!--  position="0 2 0" -->
+  <a-camera camera="fov: 60;" gps-camera rotation-reader></a-camera>
 </a-scene>
-
+</body>
 </html>
