@@ -2,7 +2,7 @@
 <!-- ANSWER: stackoverflow.com/questions/61262063/image-tracking-and-location-based-ar-with-a-frame-and-ar-js-3-having-a-problem-w -->
 <html>
 <head>
-  <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+  <script src="js/aframe-master.min.js"></script>
 
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
@@ -33,7 +33,7 @@
   </style>
 
   <!-- rawgithack development URL -->
-  <script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js'></script>
+  <script src='js/aframe-ar-nft.js'></script>
 
   </head>
 
@@ -57,8 +57,7 @@
     smoothCount="10"
     smoothTolerance=".01"
     smoothThreshold="5">
-    <a-sphere position="0 1.25 -5" radius="1.25" material="color: red;" shadow clickhandler></a-sphere>
-
+    <a-sphere position="0 0 0" radius="1.25" material="color: red;" shadow clickhandler></a-sphere>
 
     <!-- as a child of the a-nft entity, you can define the content to show. here's a GLTF model entity -->
     <!--a-entity
