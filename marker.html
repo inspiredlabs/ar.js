@@ -1,0 +1,55 @@
+<!doctype HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>GeoAR.js demo</title>
+
+</head>
+
+<body style="margin: 0; overflow: hidden;" >
+  <a-scene class="image">
+    <div class="image">content 2</div>
+    <div class="image">content 3</div>
+  </a-scene>
+  <script>
+    document.addEventListener('click', function(event) {
+      alert(event.target.tagName);//https://stackoverflow.com/a/31811065
+    });
+  </script>
+
+  <!--script>
+    function theFunction(e){
+      alert(e.target.id);
+    };
+    document.addEventListener('click', function(e) {
+      e = e || window.event;
+      var target = e.target || e.srcElement,
+          text = target.textContent || target.innerText;
+    }, false);
+  </script-->
+  <!--script>
+    // https://www.freecodecamp.org/news/how-to-call-javascript-code-on-multiple-div-elements-without-the-id-attribute-59596e570fcf/
+    //let divs = document.getElementsByTagName("div");
+    let tag = document.getElementsByTagName("div");
+
+    /* Walk through the entire set of items in a HTMLCollection
+     by first converting it to an Array using Object.entries */
+
+    Object.entries(tag).map(( object ) => {
+
+        // Here, object = Array[index, object] (object is the
+        // HTML element object). This means that the actual element
+        // is stored in object[1], not object. Do whatever you need
+        // with it here. In this case we attach a click event:
+
+        object[1].addEventListener("click", function() {
+
+        // Output innerHTML of the clicked element
+        alert("Hello " + this +
+                        " (" + this.innerHTML + ") from map method...");
+        });
+    });
+  </script-->
+</body>
+</<html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<!-- ANSWER: stackoverflow.com/questions/61262063/image-tracking-and-location-based-ar-with-a-frame-and-ar-js-3-having-a-problem-w -->
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+
+    .arjs-loader {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .arjs-loader div {
+      text-align: center;
+      font-size: 1.25em;
+      animation: loading 3s infinite; /* codepen.io/team/css-tricks/pen/ZbePzr - from: css-tricks.com/using-multi-step-animations-transitions/ */
+    }
+
+    @keyframes loading {
+      0% { color: white; }
+      100% { color: dimgray; }
+    }
+  </style>
+
+  <!-- rawgithack development URL -->
+  <script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js'></script>
+
+  </head>
+
+  <body style="margin: 0; overflow: hidden;">
+  <!-- minimal loader shown until image descriptors are loaded -->
+  <div class="arjs-loader">
+    <div>Loading&hellip;</div>
+  </div>
+
+
+<a-scene
+  vr-mode-ui="enabled: false"
+  renderer="logarithmicDepthBuffer: true;">
+
+  <!-- - from: view-source:https://ar-js-org.github.io/AR.js/aframe/examples/image-tracking/nft/ -->
+  <!-- `orchid/source.png` ALTERNATIVE: url="trex/trex-image/trex" -->
+  <a-nft
+    type="nft"
+    url="orchid/nft"
+    smooth="true"
+    smoothCount="10"
+    smoothTolerance=".01"
+    smoothThreshold="5">
+    <a-sphere position="0 1.25 -5" radius="1.25" material="color: red;" shadow clickhandler></a-sphere>
+
+
+    <!-- as a child of the a-nft entity, you can define the content to show. here's a GLTF model entity -->
+    <!--a-entity
+      gltf-model="trex/scene.gltf"
+      scale="5 5 5" position="100 100 0">
+    </a-entity-->
+  </a-nft>
+
+  <a-camera camera="near:0.0001; fov: 60; far: 10000;"></a-camera>
+</a-scene>
+</body>
+</html>
